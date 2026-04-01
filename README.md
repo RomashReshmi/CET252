@@ -35,10 +35,6 @@ poultry-farm-system/
 │   └── tests/                       # TestCafe integration suite
 │
 ├── README.md                        # Documentation requirements
-├── FIGMA_DESIGN.md                  # Layout and Design rules
-├── KANBAN_BOARD.md                  # Development Agile Stories
-├── GIT_REQUIREMENTS.md              # Simulated Branch workflows
-└── SCREENCAST_SCRIPT.md             # Walkthrough directions
 ```
 
 ## Running the Project
