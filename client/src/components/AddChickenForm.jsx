@@ -1,12 +1,22 @@
 import { useState } from 'react';
 import { Save, AlertCircle } from 'lucide-react';
 
-export default function AddChickenForm({ API_URL, onSuccess }) {
-  const [formData, setFormData] = useState({
-    breed: '',
-    age: '',
-    health_status: 'Healthy',
-    egg_production_rate: ''
+export default function AddChickenForm({ API_URL, onSuccess, initialData = null }) {
+  const [formData, setFormData] = useState(() => {
+    if (initialData) {
+      return {
+        breed: initialData.breed,
+        age: initialData.age,
+        health_status: initialData.health_status,
+        egg_production_rate: initialData.egg_production_rate
+      };
+    }
+    return {
+      breed: '',
+      age: '',
+      health_status: 'Healthy',
+      egg_production_rate: ''
+    };
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -17,8 +27,10 @@ export default function AddChickenForm({ API_URL, onSuccess }) {
     setError(null);
 
     try {
-      const res = await fetch(`${API_URL}/chickens`, {
-        method: 'POST',
+      const url = initialData ? `${API_URL}/chickens/${initialData.id}` : `${API_URL}/chickens`;
+      const method = initialData ? 'PUT' : 'POST';
+      const res = await fetch(url, {
+        method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
@@ -112,7 +124,7 @@ export default function AddChickenForm({ API_URL, onSuccess }) {
         <div className="form-actions">
           <button type="submit" className="btn btn-primary" disabled={loading}>
             <Save size={18} />
-            {loading ? 'Saving Record...' : 'Save Chicken Record'}
+            {loading ? 'Saving Record...' : (initialData ? 'Update Chicken Record' : 'Save Chicken Record')}
           </button>
         </div>
       </form>

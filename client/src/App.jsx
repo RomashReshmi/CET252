@@ -13,6 +13,7 @@ function App() {
   const [chickens, setChickens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editingChicken, setEditingChicken] = useState(null);
 
   const fetchChickens = async () => {
     setLoading(true);
@@ -46,10 +47,16 @@ function App() {
     }
   };
 
+  const handleEdit = (chicken) => {
+    setEditingChicken(chicken);
+    setActiveTab('edit');
+  };
+
   const pageHeaders = {
     dashboard: { title: 'Farm Overview', subtitle: 'Detailed statistics and insights on your poultry farm.' },
     list: { title: 'Poultry Inventory', subtitle: 'Manage active flocks, sort by health status, and track production.' },
-    add: { title: 'Onboard Chicken', subtitle: 'Create a new record in the farm database.' }
+    add: { title: 'Onboard Chicken', subtitle: 'Create a new record in the farm database.' },
+    edit: { title: 'Edit Chicken Record', subtitle: 'Update the details of an existing flock member.' }
   };
 
   return (
@@ -90,11 +97,16 @@ function App() {
           )}
 
           {activeTab === 'list' && (
-            <ChickensList loading={loading} chickens={chickens} onDelete={handleDelete} />
+            <ChickensList loading={loading} chickens={chickens} onDelete={handleDelete} onEdit={handleEdit} />
           )}
 
-          {activeTab === 'add' && (
-            <AddChickenForm API_URL={API_URL} onSuccess={() => setActiveTab('list')} />
+          {(activeTab === 'add' || activeTab === 'edit') && (
+            <AddChickenForm 
+              API_URL={API_URL} 
+              onSuccess={() => { setActiveTab('list'); setEditingChicken(null); }} 
+              initialData={activeTab === 'edit' ? editingChicken : null}
+              key={activeTab === 'edit' ? editingChicken?.id : 'add'}
+            />
           )}
         </div>
       </main>
