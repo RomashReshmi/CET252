@@ -1,6 +1,6 @@
-import { Trash2, FileWarning } from 'lucide-react';
+import { Trash2, FileWarning, Edit } from 'lucide-react';
 
-export default function ChickensList({ loading, chickens, onDelete }) {
+export default function ChickensList({ loading, chickens, onDelete, onEdit }) {
   if (loading) {
     return (
       <div className="loader-container animate-fade-in">
@@ -45,13 +45,22 @@ export default function ChickensList({ loading, chickens, onDelete }) {
               </td>
               <td>{c.egg_production_rate}</td>
               <td>
-                <button 
-                  className="btn-icon-only" 
-                  onClick={() => onDelete(c.id)}
-                  title="Delete Record"
-                >
-                  <Trash2 size={18} />
-                </button>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button 
+                    className="btn-icon-only" 
+                    onClick={() => onEdit(c)}
+                    title="Edit Record"
+                  >
+                    <Edit size={18} style={{ color: 'var(--primary)' }} />
+                  </button>
+                  <button 
+                    className="btn-icon-only" 
+                    onClick={() => onDelete(c.id)}
+                    title="Delete Record"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
