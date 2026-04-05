@@ -61,7 +61,7 @@ poultry-farm-system/
    ```bash
    npm run dev
    ```
-   > The API will be available at `http://localhost:3000`
+   > The API will be available at `http://localhost:5000`
 
 ### 2. Setup Client Side
 1. Open a new terminal and navigate to the client directory:
