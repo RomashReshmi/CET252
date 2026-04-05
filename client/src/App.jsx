@@ -6,7 +6,7 @@ import ChickensList from './components/ChickensList';
 import AddChickenForm from './components/AddChickenForm';
 import './App.css'; 
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://localhost:5000';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
